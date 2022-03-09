@@ -504,68 +504,23 @@ function showHighScores() {
     while(i<hScores.length ) {
         console.log("hScores[i].score: ", hScores[i].score);
         console.log("hScores[i].initals: ", hScores[i].initials);
+        let tableRow = document.createElement('tr');
+        let tableCell0 = document.createElement('td');
+        let tableCell1 = document.createElement('td');
+        let tableCell2 = document.createElement('td');
+        tableCell0.innerText = i+1;
+        tableCell1.innerText = hScores[i].score;
+        tableCell2.innerText = hScores[i].initials;
+        tableRow.appendChild(tableCell0);
+        tableRow.appendChild(tableCell1);
+        tableRow.appendChild(tableCell2);
+        table.appendChild(tableRow);
         //update here to add array values to the table.
         i++;
     }
 
     highScoresDiv.appendChild(table);
     highScoresDiv.classList.remove('hide');
-
     document.getElementById('enterHighScore').classList.add('hide');
     document.getElementById('score-board').classList.add('hide');
-}
-
-const Errors = document.getElementById("error")  
-function get_scores (callback) {
-    // high score data
-    let file = "scores.json";
-    fetch(file, {cache: 'no-cache'})
-    .then(function(response) {
-        // If the response isn't OK
-        if (response.status !== 200) {
-            Errors.innerHTML = response.status;
-        }
-        //If the response is OK
-        response.json().then(function (data){
-            let scores = JSON.stringify(data);
-            console.log(scores);
-            callback(scores);
-        });
-    })
-    // If there is an error
-    .catch(function(err) {
-        Errors.innerHTML = err;
-    })
-}  
-// Display High Score List!
-
-//high score list
-const List = document.getElementById("highscores")
-
-var list_scores = function (scores) {
-    let object = JSON.parse(scores) 
-    //lowest score saved for later
-    let lowest_score = object [9].score;
-    document.getElementById("lowscore").value = lowest_score;
-    //for loop
-    for(let i=0; i<object.length; i++) {
-        //consol.log(object[i]);
-        let li = document.createElement("LI");
-        let text = document.createTextNode(object[i].name + " ... " + object[i].score);
-        li.appendChild(text);
-        List.appendChild(li);
-
-        if (i===0) {
-            li.setAttribute("class", "top1");
-        }
-        if (i===1) {
-            li.setAttribute("class", "top2");
-        }
-        if (i===2) {
-            li.setAttribute("class", "top3");
-        }
-    
-
-    }
-
 }
